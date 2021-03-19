@@ -5,10 +5,13 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     // Start is called before the first frame update
+    
+ 
     public class Player {
 
         bool isActive = false;
         public Color color;
+     
 
         public bool [,]table = new bool[3,3];
 
@@ -31,8 +34,18 @@ public class Controller : MonoBehaviour
         }
     }
 
-    static public List<Player> players = new List<Player>(2);
-    static public int  activePlayer;
+    public List<Player> players = new List<Player>(2);
+     public int  activePlayer;
+
+    #region Singlenton
+
+    public static Controller instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
 
     void Start()
     {
@@ -47,13 +60,13 @@ public class Controller : MonoBehaviour
         players.Add(new Player(Color.green));
     }
 
-    public static void ChangePlayer()
+    public  void ChangePlayer()
     {
         activePlayer = (activePlayer + 1) % players.Count;
     }
 
 
-    static public bool IsDone(bool[,] table)
+     public bool IsDone(bool[,] table)
     {
         int numValidationRows, numValidationCols, numValidationDiag = 0, numValidationDiagInv = 0;
 
